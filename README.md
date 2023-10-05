@@ -8,6 +8,6 @@ Gameplay Systems Programming 1st Tech Demo (2D Unity Platformer Project)
 4. Boomerang Attack (WITHOUT enemies)
 5. Metroidvania Camera Transitions
 6. Ladder System
-7. Moving Platform System
+7. Moving Platform System (Vertical & Horizontal)
 8. Collapsible Platform System
 9. Fully playable on WebGL (Hosted on Itch.io)
