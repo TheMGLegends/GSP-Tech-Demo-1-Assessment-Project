@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Follow Object:
+/// In-charge of following the position of a given object
+/// </summary>
 public class FollowObject : MonoBehaviour
 {
     [SerializeField] private Transform objectPosition;

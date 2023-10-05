@@ -26,9 +26,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask layersToHit;
     private float normalGravity;
 
-    //====================================================================================================
-    //-----------------------------------------Built-in Functions-----------------------------------------
-    //====================================================================================================
     private void Start()
     {
         rb2D = GetComponent<Rigidbody2D>();
@@ -42,7 +39,6 @@ public class PlayerController : MonoBehaviour
     {
         GetHorizontalInput();
         SetFacingDirection(horizontalInput);
-        UpdateAnimations();
 
         Jump();
     }
@@ -52,19 +48,11 @@ public class PlayerController : MonoBehaviour
         Move();
     }
 
-
-    //====================================================================================================
-    //-------------------------------------------Move Functions-------------------------------------------
-    //====================================================================================================
     private void Move()
     {
         rb2D.velocity = new Vector2(horizontalInput * movementSpeed, rb2D.velocity.y);
     }
 
-
-    //====================================================================================================
-    //-------------------------------------------Jump Functions-------------------------------------------
-    //====================================================================================================
     private void Jump()
     {
         // INFO: Prevents the player from jumping in mid-air
@@ -99,13 +87,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-
-    //====================================================================================================
-    //------------------------------------------Helper Functions------------------------------------------
-    //====================================================================================================
     private void GetHorizontalInput()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
+        animator.SetFloat("MovementSpeed", Mathf.Abs(horizontalInput));
     }
 
     private bool IsGrounded()
@@ -131,10 +116,5 @@ public class PlayerController : MonoBehaviour
             isFacingRight = false;
             transform.localScale *= new Vector2(-1, 1);
         }
-    }
-
-    private void UpdateAnimations()
-    {
-        animator.SetFloat("MovementSpeed", Mathf.Abs(horizontalInput));
     }
 }
