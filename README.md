@@ -9,5 +9,5 @@ Gameplay Systems Programming 1st Tech Demo (2D Unity Platformer Project)
 5. Metroidvania Camera Transitions
 6. Ladder System
 7. Moving Platform System (Vertical & Horizontal) (DONE - NOT TESTED)
-8. Collapsible Platform System
+8. Collapsible Platform System (DONE - NOT TESTED)
 9. Fully playable on WebGL (Hosted on Itch.io)
