@@ -11,7 +11,7 @@ Gameplay Systems Programming 1st Tech Demo (2D Unity Platformer Project)
 2. Fully Animated Main Character (Idle, Run, Jump and Fall) (DONE - NOT TESTED)
 3. Jetpack Powerup + Fuel Gauge
 4. Boomerang Attack (WITHOUT enemies)
-5. Metroidvania Camera Transitions
+5. Metroidvania Camera Transitions (DONE - NOT TESTED)
 6. Ladder System
 7. Moving Platform System (Vertical & Horizontal) (DONE - NOT TESTED)
 8. Collapsible Platform System (DONE - NOT TESTED)
