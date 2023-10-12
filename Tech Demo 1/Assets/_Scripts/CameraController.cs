@@ -48,7 +48,7 @@ public class CameraController : MonoBehaviour
 
         // INFO: MoveTowards is used to slow down the camera movement in order to make sure the camera doesn't just snap to the new section,
         // instead it progressively shows the player based on the camera speed defined by the user
-        transform.position = Vector3.MoveTowards(transform.position, newPosition, cameraSpeed);
+        transform.position = Vector3.MoveTowards(transform.position, newPosition, cameraSpeed * Time.deltaTime);
     }
 
     public void ChangeBounds(Vector2 maximumBounds, Vector2 minimumBounds)

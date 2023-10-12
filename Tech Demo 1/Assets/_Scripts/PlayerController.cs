@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,7 @@ using UnityEngine;
 /// - In-charge of controlling the following actions:
 ///   1. Move
 ///   2. Jump
+///   3. Boomerang Instantiation
 /// </summary>
 public class PlayerController : MonoBehaviour
 {
@@ -26,6 +28,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask layersToHit;
     private float normalGravity;
 
+    [Header("Boomerang Settings:")]
+    [SerializeField] private GameObject boomerangPrefab;
+    private GameObject boomerangInstance;
+    private bool boomerangUsed;
+
     private void Start()
     {
         rb2D = GetComponent<Rigidbody2D>();
@@ -41,6 +48,7 @@ public class PlayerController : MonoBehaviour
         SetFacingDirection(horizontalInput);
 
         Jump();
+        InstantiateBoomerang();
     }
 
     private void FixedUpdate()
@@ -87,6 +95,23 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void InstantiateBoomerang()
+    {
+        // INFO: Prevents multipe boomerangs from being thrown
+        if (!boomerangUsed && Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            boomerangInstance = Instantiate(boomerangPrefab, transform.position, Quaternion.identity);
+            boomerangUsed = true;
+
+            // INFO: Changes the boomerang instances scale so that the boomrang can travel
+            // in the direction the player last faced
+            if (!isFacingRight)
+            {
+                boomerangInstance.transform.localScale *= new Vector2(-1, 1);
+            }
+        }
+    }
+
     private void GetHorizontalInput()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
@@ -116,5 +141,11 @@ public class PlayerController : MonoBehaviour
             isFacingRight = false;
             transform.localScale *= new Vector2(-1, 1);
         }
+    }
+
+    public void ResetBoomerang(bool isAway)
+    {
+        // INFO: Allows boomerang to be thrown again once it has returned to the player
+        boomerangUsed = isAway;
     }
 }
