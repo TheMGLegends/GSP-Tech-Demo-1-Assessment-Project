@@ -9,6 +9,7 @@ using UnityEngine;
 ///   1. Move
 ///   2. Jump
 ///   3. Boomerang Instantiation
+///   4. Jetpack Usage
 /// </summary>
 public class PlayerController : MonoBehaviour
 {
@@ -33,6 +34,13 @@ public class PlayerController : MonoBehaviour
     private GameObject boomerangInstance;
     private bool boomerangUsed;
 
+    [Header("Jetpack Settings:")]
+    [SerializeField] private float jetpackForce;
+    [SerializeField] private float jetpackIncreaseAmount;
+    [SerializeField] private float jetpackDecreaseAmount;
+    private bool jetpackInUse;
+    private bool jetpackRecharging;
+
     private void Start()
     {
         rb2D = GetComponent<Rigidbody2D>();
@@ -49,11 +57,25 @@ public class PlayerController : MonoBehaviour
 
         Jump();
         InstantiateBoomerang();
+        JetpackInUse();
+    }
+
+    private void JetpackInUse()
+    {
+        if (jetpackInUse)
+        {
+            animator.SetBool("IsJumping", true);
+        }
+        else
+        {
+            animator.SetBool("IsJumping", false);
+        }
     }
 
     private void FixedUpdate()
     {
         Move();
+        UseJetpack();
     }
 
     private void Move()
@@ -109,6 +131,33 @@ public class PlayerController : MonoBehaviour
             {
                 boomerangInstance.transform.localScale *= new Vector2(-1, 1);
             }
+        }
+    }
+
+    private void UseJetpack()
+    {
+        if (Input.GetKey(KeyCode.LeftShift) && JetpackManager.jetpackManager.ReturnFuelAmount() > 0)
+        {
+            jetpackRecharging = false;
+            jetpackInUse = true;
+            rb2D.gravityScale = normalGravity;
+            rb2D.AddForce(Vector2.up * jetpackForce, ForceMode2D.Force);
+            JetpackManager.jetpackManager.DecreaseFuel(jetpackDecreaseAmount);
+        }
+
+        if (Input.GetKeyUp(KeyCode.LeftShift) || JetpackManager.jetpackManager.ReturnFuelAmount() <= 0)
+        {
+            jetpackInUse = false;
+        }
+
+        if (IsGrounded())
+        {
+            jetpackRecharging = true;
+        }
+
+        if (jetpackRecharging)
+        {
+            JetpackManager.jetpackManager.IncreaseFuel(jetpackDecreaseAmount);
         }
     }
 

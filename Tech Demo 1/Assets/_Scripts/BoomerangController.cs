@@ -27,9 +27,8 @@ public class BoomerangController : MonoBehaviour
         playerObject = GameObject.FindWithTag("Player");
         childObject = gameObject.transform.GetChild(0);
 
-        // INFO: If facing left (Local Scale X = -1), hence will transfrom distance and angle to go in the left direction
+        // INFO: If facing left (Local Scale X = -1), hence will transfrom distance to go in the left direction
         throwingDistance *= transform.localScale.x;
-        rotationAngle *= transform.localScale.x;
 
         endingPosition = new (transform.position.x + throwingDistance, transform.position.y, transform.position.z);
     }
