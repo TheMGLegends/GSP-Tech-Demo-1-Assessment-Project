@@ -60,18 +60,6 @@ public class PlayerController : MonoBehaviour
         JetpackInUse();
     }
 
-    private void JetpackInUse()
-    {
-        if (jetpackInUse)
-        {
-            animator.SetBool("IsJumping", true);
-        }
-        else
-        {
-            animator.SetBool("IsJumping", false);
-        }
-    }
-
     private void FixedUpdate()
     {
         Move();
@@ -140,6 +128,7 @@ public class PlayerController : MonoBehaviour
         {
             jetpackRecharging = false;
             jetpackInUse = true;
+
             rb2D.gravityScale = normalGravity;
             rb2D.AddForce(Vector2.up * jetpackForce, ForceMode2D.Force);
             JetpackManager.jetpackManager.DecreaseFuel(jetpackDecreaseAmount);
@@ -158,6 +147,18 @@ public class PlayerController : MonoBehaviour
         if (jetpackRecharging)
         {
             JetpackManager.jetpackManager.IncreaseFuel(jetpackDecreaseAmount);
+        }
+    }
+
+    private void JetpackInUse()
+    {
+        if (jetpackInUse)
+        {
+            animator.SetBool("IsJumping", true);
+        }
+        else
+        {
+            animator.SetBool("IsJumping", false);
         }
     }
 
