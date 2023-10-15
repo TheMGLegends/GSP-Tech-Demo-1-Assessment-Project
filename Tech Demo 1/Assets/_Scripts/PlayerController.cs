@@ -41,6 +41,11 @@ public class PlayerController : MonoBehaviour
     private bool jetpackInUse;
     private bool jetpackRecharging;
 
+    [Header("Ladder Settings:")]
+    [SerializeField] private float climbingSpeed;
+    private float verticalInput = 0.0f;
+    private bool isClimbing;
+
     private void Start()
     {
         rb2D = GetComponent<Rigidbody2D>();
@@ -69,6 +74,12 @@ public class PlayerController : MonoBehaviour
     private void Move()
     {
         rb2D.velocity = new Vector2(horizontalInput * movementSpeed, rb2D.velocity.y);
+
+        if (isClimbing && horizontalInput == 0)
+        {
+            rb2D.gravityScale = 0;
+            rb2D.velocity = new Vector2(rb2D.velocity.x, verticalInput * climbingSpeed);
+        }
     }
 
     private void Jump()
@@ -76,6 +87,9 @@ public class PlayerController : MonoBehaviour
         // INFO: Prevents the player from jumping in mid-air
         if (IsGrounded())
         {
+            animator.SetBool("IsJumping", false);
+            animator.SetBool("IsFalling", false);
+
             rb2D.gravityScale = normalGravity;
 
             if (Input.GetKeyDown(KeyCode.Space))
@@ -154,25 +168,23 @@ public class PlayerController : MonoBehaviour
     {
         if (jetpackInUse)
         {
-            animator.SetBool("IsJumping", true);
+            //animator.SetBool("IsJumping", true);
         }
         else
         {
-            animator.SetBool("IsJumping", false);
+            //animator.SetBool("IsJumping", false);
         }
     }
 
     private void GetHorizontalInput()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
+        verticalInput = Input.GetAxisRaw("Vertical");
         animator.SetFloat("MovementSpeed", Mathf.Abs(horizontalInput));
     }
 
     private bool IsGrounded()
     {
-        animator.SetBool("IsJumping", false);
-        animator.SetBool("IsFalling", false);
-
         return Physics2D.BoxCast(boxCollider.bounds.center, boxCollider.bounds.size, 0.0f, Vector2.down, castLength, layersToHit);
     }
 
@@ -197,5 +209,22 @@ public class PlayerController : MonoBehaviour
     {
         // INFO: Allows boomerang to be thrown again once it has returned to the player
         boomerangUsed = isAway;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ladder"))
+        {
+            isClimbing = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ladder"))
+        {
+            isClimbing = false;
+            rb2D.gravityScale = normalGravity;
+        }
     }
 }
