@@ -10,6 +10,7 @@ using UnityEngine;
 ///   2. Jump
 ///   3. Boomerang Instantiation
 ///   4. Jetpack Usage
+///   5. Ladder Usage
 /// </summary>
 public class PlayerController : MonoBehaviour
 {
@@ -62,7 +63,6 @@ public class PlayerController : MonoBehaviour
 
         Jump();
         InstantiateBoomerang();
-        JetpackInUse();
     }
 
     private void FixedUpdate()
@@ -75,6 +75,7 @@ public class PlayerController : MonoBehaviour
     {
         rb2D.velocity = new Vector2(horizontalInput * movementSpeed, rb2D.velocity.y);
 
+        // INFO: Prevents player from being caught by ladder if they're just running past
         if (isClimbing && horizontalInput == 0)
         {
             rb2D.gravityScale = 0;
@@ -141,16 +142,10 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.LeftShift) && JetpackManager.jetpackManager.ReturnFuelAmount() > 0)
         {
             jetpackRecharging = false;
-            jetpackInUse = true;
 
             rb2D.gravityScale = normalGravity;
             rb2D.AddForce(Vector2.up * jetpackForce, ForceMode2D.Force);
             JetpackManager.jetpackManager.DecreaseFuel(jetpackDecreaseAmount);
-        }
-
-        if (Input.GetKeyUp(KeyCode.LeftShift) || JetpackManager.jetpackManager.ReturnFuelAmount() <= 0)
-        {
-            jetpackInUse = false;
         }
 
         if (IsGrounded())
@@ -161,18 +156,6 @@ public class PlayerController : MonoBehaviour
         if (jetpackRecharging)
         {
             JetpackManager.jetpackManager.IncreaseFuel(jetpackDecreaseAmount);
-        }
-    }
-
-    private void JetpackInUse()
-    {
-        if (jetpackInUse)
-        {
-            //animator.SetBool("IsJumping", true);
-        }
-        else
-        {
-            //animator.SetBool("IsJumping", false);
         }
     }
 
