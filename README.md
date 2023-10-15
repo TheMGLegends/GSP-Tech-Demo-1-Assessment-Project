@@ -12,7 +12,7 @@ Gameplay Systems Programming 1st Tech Demo (2D Unity Platformer Project)
 3. Jetpack Powerup + Fuel Gauge (DONE - NOT TESTED)
 4. Boomerang Attack (WITHOUT enemies) (DONE - NOT TESTED)
 5. Metroidvania Camera Transitions (DONE - NOT TESTED)
-6. Ladder System
+6. Ladder System (DONE - NOT TESTED)
 7. Moving Platform System (Vertical & Horizontal) (DONE - NOT TESTED)
 8. Collapsible Platform System (DONE - NOT TESTED)
 9. Fully playable on WebGL (Hosted on Itch.io)
