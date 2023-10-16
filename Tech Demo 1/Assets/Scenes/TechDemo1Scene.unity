@@ -5207,7 +5207,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1770886864025574906, guid: 37ee602ee61d8af49992af2c28a2c56e, type: 3}
       propertyPath: climbingSpeed
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1770886864025574906, guid: 37ee602ee61d8af49992af2c28a2c56e, type: 3}
       propertyPath: boomerangSpeed
@@ -5232,6 +5232,42 @@ PrefabInstance:
     - target: {fileID: 1770886864025574906, guid: 37ee602ee61d8af49992af2c28a2c56e, type: 3}
       propertyPath: jetpackIncreaseAmount
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1770886864025574906, guid: 37ee602ee61d8af49992af2c28a2c56e, type: 3}
+      propertyPath: animationNamesList.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1770886864025574906, guid: 37ee602ee61d8af49992af2c28a2c56e, type: 3}
+      propertyPath: animationStatesList.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1770886864025574906, guid: 37ee602ee61d8af49992af2c28a2c56e, type: 3}
+      propertyPath: 'animationNamesList.Array.data[0]'
+      value: playerIdle
+      objectReference: {fileID: 0}
+    - target: {fileID: 1770886864025574906, guid: 37ee602ee61d8af49992af2c28a2c56e, type: 3}
+      propertyPath: 'animationNamesList.Array.data[1]'
+      value: playerRun
+      objectReference: {fileID: 0}
+    - target: {fileID: 1770886864025574906, guid: 37ee602ee61d8af49992af2c28a2c56e, type: 3}
+      propertyPath: 'animationNamesList.Array.data[2]'
+      value: playerJump
+      objectReference: {fileID: 0}
+    - target: {fileID: 1770886864025574906, guid: 37ee602ee61d8af49992af2c28a2c56e, type: 3}
+      propertyPath: 'animationNamesList.Array.data[3]'
+      value: playerFall
+      objectReference: {fileID: 0}
+    - target: {fileID: 1770886864025574906, guid: 37ee602ee61d8af49992af2c28a2c56e, type: 3}
+      propertyPath: 'animationStatesList.Array.data[1]'
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1770886864025574906, guid: 37ee602ee61d8af49992af2c28a2c56e, type: 3}
+      propertyPath: 'animationStatesList.Array.data[2]'
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1770886864025574906, guid: 37ee602ee61d8af49992af2c28a2c56e, type: 3}
+      propertyPath: 'animationStatesList.Array.data[3]'
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2263005040249914463, guid: 37ee602ee61d8af49992af2c28a2c56e, type: 3}
       propertyPath: m_LocalPosition.x

@@ -14,10 +14,24 @@ using UnityEngine;
 /// </summary>
 public class PlayerController : MonoBehaviour
 {
+    public enum PlayerAnimationStates
+    {
+        idle,
+        run,
+        jump,
+        fall
+    }
+
     private Rigidbody2D rb2D;
     private BoxCollider2D boxCollider;
-    private Animator animator;
     private bool isFacingRight = true;
+
+    [Header("Animation Settings:")]
+    [SerializeField] private List<PlayerAnimationStates> animationStatesList = new();
+    [SerializeField] private List<string> animationNamesList = new();
+    private Dictionary<PlayerAnimationStates, string> animationDictionary = new();
+    private Animator animator;
+    private PlayerAnimationStates currentState;
 
     [Header("Move Settings:")]
     [SerializeField] private float movementSpeed;
@@ -54,11 +68,16 @@ public class PlayerController : MonoBehaviour
         animator = GetComponent<Animator>();
 
         normalGravity = rb2D.gravityScale;
+
+        for (int i = 0; i < animationStatesList.Count; i++)
+        {
+            animationDictionary.Add(animationStatesList[i], animationNamesList[i]);
+        }
     }
 
     private void Update()
     {
-        GetHorizontalInput();
+        GetInputAxis();
         SetFacingDirection(horizontalInput);
 
         Jump();
@@ -81,6 +100,18 @@ public class PlayerController : MonoBehaviour
             rb2D.gravityScale = 0;
             rb2D.velocity = new Vector2(rb2D.velocity.x, verticalInput * climbingSpeed);
         }
+
+        if (IsGrounded())
+        {
+            if (horizontalInput != 0)
+            {
+                ChangeAnimationState(PlayerAnimationStates.run);
+            }
+            else
+            {
+                ChangeAnimationState(PlayerAnimationStates.idle);
+            }
+        }
     }
 
     private void Jump()
@@ -88,17 +119,17 @@ public class PlayerController : MonoBehaviour
         // INFO: Prevents the player from jumping in mid-air
         if (IsGrounded())
         {
-            animator.SetBool("IsJumping", false);
-            animator.SetBool("IsFalling", false);
-
             rb2D.gravityScale = normalGravity;
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 rb2D.AddForce(Vector2.up * jumpForce, ForceMode2D.Impulse);
-
-                animator.SetBool("IsJumping", true);
             }
+        }
+
+        if (!IsGrounded() && rb2D.velocity.y > 0)
+        {
+            ChangeAnimationState(PlayerAnimationStates.jump);
         }
 
         // INFO: Variable jump height made possible when 'space' key is
@@ -107,16 +138,12 @@ public class PlayerController : MonoBehaviour
         {
             rb2D.velocity = new Vector2(rb2D.velocity.x, 0);
             rb2D.gravityScale = fallingGravity;
-
-            animator.SetBool("IsJumping", false);
-            animator.SetBool("IsFalling", true);
+            ChangeAnimationState(PlayerAnimationStates.fall);
         }
-        else if (rb2D.velocity.y < 0)
+        else if (rb2D.velocity.y < 0 && !IsGrounded())
         {
             rb2D.gravityScale = fallingGravity;
-
-            animator.SetBool("IsJumping", false);
-            animator.SetBool("IsFalling", true);
+            ChangeAnimationState(PlayerAnimationStates.fall);
         }
     }
 
@@ -159,11 +186,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void GetHorizontalInput()
+    private void GetInputAxis()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
-        animator.SetFloat("MovementSpeed", Mathf.Abs(horizontalInput));
     }
 
     private bool IsGrounded()
@@ -185,6 +211,18 @@ public class PlayerController : MonoBehaviour
         {
             isFacingRight = false;
             transform.localScale *= new Vector2(-1, 1);
+        }
+    }
+
+    private void ChangeAnimationState(PlayerAnimationStates newState)
+    {
+        if (currentState != newState)
+        {
+            if (animationDictionary.ContainsKey(newState))
+            {
+                animator.Play(animationDictionary[newState]);
+                currentState = newState;
+            }
         }
     }
 
