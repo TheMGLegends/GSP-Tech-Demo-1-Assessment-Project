@@ -1,18 +1,9 @@
 # GSP-Tech-Demo-1-Assessment-Project
 Gameplay Systems Programming 1st Tech Demo (2D Unity Platformer Project)
 
-# GSP Project Requirements
+[<p align="center"><img src="https://img.youtube.com/vi/3kQwceWMYOY/hqdefault.jpg" width="800" height="600"/></p>](https://www.youtube.com/embed/3kQwceWMYOY)
 
-# Video:
-1. 3-6 Minute video showcasing completed features (Maybe you can include parts where you show your code and describe a bit how it works)
+## Insights
 
-# Tech Demo Requirements:
-1. 2D Platforming Mechanics (Move & Jump) (DONE)
-2. Fully Animated Main Character (Idle, Run, Jump and Fall) (DONE)
-3. Jetpack Powerup + Fuel Gauge (DONE)
-4. Boomerang Attack (WITHOUT enemies) (DONE)
-5. Metroidvania Camera Transitions (DONE)
-6. Ladder System (DONE)
-7. Moving Platform System (Vertical & Horizontal) (DONE)
-8. Collapsible Platform System (DONE)
-9. Fully playable on WebGL (Hosted on Itch.io) (DONE)
+Part of my journey to improve my proficiency in Unity and C#. You can play the game here:
+https://themglegends.itch.io/blueblobs-jetpack-journey
